@@ -1,0 +1,135 @@
+/* Mini-player window (380x140, frameless; Windows 11 rounds the corners natively). */
+
+.mini-body {
+  background: var(--color-surface);
+}
+
+.mini {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: stretch;
+  gap: 14px;
+  padding: 12px 12px 14px;
+  overflow: hidden;
+  isolation: isolate;
+  -webkit-app-region: drag;
+  background:
+    radial-gradient(80% 140% at 0% 0%, color-mix(in srgb, var(--ambient-a) 70%, transparent), transparent 70%),
+    var(--color-surface);
+  transition: background var(--dur-ambient);
+}
+.mini button,
+.mini [role='slider'] {
+  -webkit-app-region: no-drag;
+}
+
+.mini__art {
+  width: 112px;
+  flex: none;
+  align-self: center;
+}
+.mini__art .artwork {
+  width: 100%;
+}
+
+.mini__body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.mini__top {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+}
+.mini__meta {
+  flex: 1;
+  min-width: 0;
+  padding-top: 2px;
+}
+.mini__title {
+  font: 400 21px/1.1 var(--font-display);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mini__artist {
+  margin-top: 2px;
+  font: var(--text-meta);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mini__window-btns {
+  display: flex;
+  margin: -4px -4px 0 0;
+}
+
+.mini__controls {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: -4px;
+}
+.mini__time {
+  margin-left: auto;
+  font: var(--text-mono);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-muted);
+}
+
+.mini-btn {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+  transition:
+    background var(--dur-fast),
+    color var(--dur-fast);
+}
+.mini-btn--lg {
+  width: 30px;
+  height: 30px;
+  color: var(--color-text-primary);
+}
+.mini-btn:hover:not(:disabled) {
+  background: var(--color-glass-hover);
+  color: var(--color-text-primary);
+}
+.mini-btn:disabled {
+  opacity: 0.3;
+}
+.mini-btn.is-fav {
+  color: var(--accent);
+}
+.mini-play {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  margin: 0 2px;
+  border-radius: 50%;
+  background: var(--color-text-primary);
+  color: var(--color-text-on-accent);
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+.mini-play:hover:not(:disabled) {
+  transform: scale(1.05);
+}
+.mini-play:disabled {
+  opacity: 0.3;
+}
+
+.mini__progress {
+  flex: none;
+  height: 12px;
+}
+.mini__progress .slider__fill {
+  background: var(--accent);
+}

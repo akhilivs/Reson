@@ -1,0 +1,7 @@
+node_modules/
+dist/
+release/
+test-results/
+tests/fixtures/generated/
+.vela-e2e/
+*.log

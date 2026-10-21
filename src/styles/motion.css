@@ -1,0 +1,219 @@
+/*
+  Reson motion system.
+  - Page changes use View Transitions (see src/app/motion.js): only the content area moves,
+    the shell (sidebar, transport) stays perfectly still.
+  - Shared elements (album art → album page, player art → Now Playing) morph with a spring.
+  - Everything collapses to instant when reduced motion is on.
+*/
+
+:root {
+  /* Gentle spring: slight overshoot, settles quickly. */
+  --ease-spring: linear(0, 0.006, 0.025 2.8%, 0.101 6.1%, 0.539 18.9%, 0.721 25.3%, 0.849 31.5%, 0.937 38.1%, 0.968 41.8%, 0.991 45.7%, 1.006 50.1%, 1.015 55%, 1.017 63.9%, 1.001 85.9%, 1);
+  --ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
+  --ease-exit: cubic-bezier(0.3, 0, 0.8, 0.15);
+}
+
+/* ---------- Page transitions ---------- */
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+.content {
+  view-transition-name: content;
+}
+::view-transition-group(content) {
+  animation: none;
+}
+::view-transition-old(content) {
+  animation: vt-out 160ms var(--ease-exit) both;
+}
+::view-transition-new(content) {
+  animation: vt-in 380ms var(--ease-emphasized) both;
+}
+:root[data-nav-dir='back']::view-transition-old(content) {
+  animation-name: vt-out-back;
+}
+:root[data-nav-dir='back']::view-transition-new(content) {
+  animation-name: vt-in-back;
+}
+@keyframes vt-out {
+  to {
+    opacity: 0;
+    transform: translateX(-18px);
+  }
+}
+@keyframes vt-in {
+  from {
+    opacity: 0;
+    transform: translateX(28px);
+  }
+}
+@keyframes vt-out-back {
+  to {
+    opacity: 0;
+    transform: translateX(18px);
+  }
+}
+@keyframes vt-in-back {
+  from {
+    opacity: 0;
+    transform: translateX(-28px);
+  }
+}
+
+/* Shared-element morphs */
+::view-transition-group(hero-art),
+::view-transition-group(np-art) {
+  animation-duration: 560ms;
+  animation-timing-function: var(--ease-spring);
+  z-index: 10;
+}
+::view-transition-image-pair(hero-art),
+::view-transition-image-pair(np-art) {
+  isolation: auto;
+}
+::view-transition-old(hero-art),
+::view-transition-new(hero-art),
+::view-transition-old(np-art),
+::view-transition-new(np-art) {
+  animation-duration: 300ms;
+  mix-blend-mode: normal;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Now Playing rises over the app and sinks back down. */
+::view-transition-new(now-playing) {
+  animation: np-rise 460ms var(--ease-emphasized) both;
+}
+::view-transition-old(now-playing) {
+  animation: np-sink 240ms var(--ease-exit) both;
+}
+@keyframes np-rise {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.985);
+  }
+}
+@keyframes np-sink {
+  to {
+    opacity: 0;
+    transform: translateY(32px) scale(0.99);
+  }
+}
+
+/* ---------- Entrances ---------- */
+
+.rise {
+  animation: rise 560ms var(--ease-emphasized) both;
+  animation-delay: calc(min(var(--i, 0), 18) * 32ms);
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+.meta-in {
+  animation: meta-in 460ms var(--ease-emphasized) both;
+}
+@keyframes meta-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+    filter: blur(2px);
+  }
+}
+
+/* ---------- Skeletons ---------- */
+
+.skeleton {
+  background: linear-gradient(100deg, rgba(236, 235, 230, 0.04) 30%, rgba(236, 235, 230, 0.09) 50%, rgba(236, 235, 230, 0.04) 70%);
+  background-size: 300% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+  border-radius: var(--radius-sm);
+}
+@keyframes shimmer {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+.skeleton-wrap {
+  animation: fade 300ms 120ms both;
+}
+
+/* ---------- Micro-interactions ---------- */
+
+/* Play ⇄ pause morph (SVG path interpolation). */
+.pp-icon path {
+  transition: d 280ms var(--ease-emphasized);
+}
+
+/* Heart pop + ring burst when something is favorited. */
+.just-faved {
+  position: relative;
+}
+.just-faved svg {
+  animation: heart-pop 600ms var(--ease-spring);
+}
+.just-faved::before {
+  content: '';
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: 26px;
+  height: 26px;
+  margin: -13px 0 0 -13px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  animation: heart-ring 560ms var(--ease-emphasized) both;
+  pointer-events: none;
+}
+@keyframes heart-pop {
+  0% {
+    transform: scale(0.6);
+  }
+  45% {
+    transform: scale(1.28);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes heart-ring {
+  from {
+    opacity: 0.9;
+    transform: scale(0.3);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+}
+
+/* Springy press for primary controls. */
+.btn:active:not(:disabled),
+.play-btn:active:not(:disabled),
+.card-action:active {
+  transition-timing-function: var(--ease-spring);
+}
+
+/* ---------- Reduced motion ---------- */
+
+:root[data-reduce-motion='true'] *,
+:root[data-reduce-motion='true'] *::before,
+:root[data-reduce-motion='true'] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  animation-delay: 0ms !important;
+  transition-duration: 0ms !important;
+}
+:root[data-reduce-motion='true'] .spinner,
+:root[data-reduce-motion='true'] .play-btn.is-loading svg {
+  animation-duration: 2s !important;
+  animation-iteration-count: infinite !important;
+}
