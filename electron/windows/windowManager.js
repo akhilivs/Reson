@@ -37,7 +37,7 @@ export class WindowManager extends EventEmitter {
       // Keep audio events/timers running while hidden or minimized.
       backgroundThrottling: false,
       // Quiet (test) mode also turns off animations: hidden windows never render frames to finish them.
-      additionalArguments: QUIET ? ['--brook-quiet'] : [],
+      additionalArguments: QUIET ? ['--reson-quiet'] : [],
     };
   }
 

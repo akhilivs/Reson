@@ -17,7 +17,7 @@ function subscribe(channel) {
 }
 
 contextBridge.exposeInMainWorld('vela', {
-  env: { quiet: process.argv.includes('--brook-quiet') },
+  env: { quiet: process.argv.includes('--reson-quiet') },
   library: {
     getFolders: () => call('library:getFolders'),
     addFolders: () => call('library:addFolders'),

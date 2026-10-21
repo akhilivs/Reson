@@ -11,9 +11,9 @@ export function KeyFeedback() {
       setMsg({ ...e.detail, id: Date.now() });
       timer.current = setTimeout(() => setMsg(null), 900);
     };
-    window.addEventListener('brook:osd', onOsd);
+    window.addEventListener('reson:osd', onOsd);
     return () => {
-      window.removeEventListener('brook:osd', onOsd);
+      window.removeEventListener('reson:osd', onOsd);
       clearTimeout(timer.current);
     };
   }, []);

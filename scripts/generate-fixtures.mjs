@@ -90,7 +90,7 @@ function flac({ left, right, rate }, tags, picture) {
   // sample rate (20) | channels-1 (3) | bps-1 (5) | total samples (36)
   const big = (BigInt(rate) << 44n) | (1n << 41n) | (15n << 36n) | BigInt(total);
   si.writeBigUInt64BE(big, 10);
-  const vendor = Buffer.from('Brook fixture');
+  const vendor = Buffer.from('Reson fixture');
   const comments = Object.entries(tags).map(([k, v]) => Buffer.from(`${k}=${v}`, 'utf8'));
   const vc = Buffer.alloc(8 + vendor.length + comments.reduce((s, c) => s + 4 + c.length, 0));
   let o = 0;

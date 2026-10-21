@@ -146,8 +146,8 @@ function Shell() {
       setLeaving(true);
       setTimeout(() => api.app.quit(), 1400);
     };
-    window.addEventListener('brook:farewell', onFarewell);
-    return () => window.removeEventListener('brook:farewell', onFarewell);
+    window.addEventListener('reson:farewell', onFarewell);
+    return () => window.removeEventListener('reson:farewell', onFarewell);
   }, []);
   const scrollRef = useRef(null);
   const searchRef = useRef(null);
@@ -240,7 +240,7 @@ function Shell() {
         navigate('settings');
       } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'q') {
         e.preventDefault();
-        window.dispatchEvent(new Event('brook:farewell'));
+        window.dispatchEvent(new Event('reson:farewell'));
       } else if (e.key.toLowerCase() === 'f' && !e.ctrlKey && !e.metaKey && !e.altKey && !typing) {
         e.preventDefault();
         if (focus) exitFocus();

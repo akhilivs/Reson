@@ -26,7 +26,7 @@ beforeAll(() => {
 
 let tmp;
 beforeEach(() => {
-  tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'brook-transcode-'));
+  tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'reson-transcode-'));
 });
 afterEach(() => fs.rmSync(tmp, { recursive: true, force: true }));
 

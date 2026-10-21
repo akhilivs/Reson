@@ -1,7 +1,5 @@
 # Reson
 
-A desktop music player, forked from Brook.
-
 *Your music lives on.* An offline-first Windows music player for the music on your own disks.
 
 No account, no server, no internet. Reson reads the folders you choose, never modifies your files, and keeps the library, playlists and listening history in a local SQLite database.
@@ -84,6 +82,6 @@ E2E runs set `VELA_QUIET=1`: windows stay hidden, audio is muted and media-key i
 
 ## License
 
-[MIT](LICENSE) © 2026 Akhil IVS. Based on Brook, © 2026 Chenna Sai Charan, also MIT licensed; that copyright notice is kept in [LICENSE](LICENSE) as the MIT License requires.
+[MIT](LICENSE) © 2026 Akhil IVS.
 
 The bundled `ffmpeg` binary (via `ffmpeg-static`) is licensed separately under GPL-3.0; see the note under Formats.

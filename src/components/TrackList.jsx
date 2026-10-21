@@ -10,7 +10,7 @@ import { formatDuration, formatDate } from '../utils/format.js';
 export const ScrollContext = createContext({ current: null });
 
 const ROW_HEIGHT = 52;
-export const TRACKS_MIME = 'application/x-brook-tracks';
+export const TRACKS_MIME = 'application/x-reson-tracks';
 
 /** A small "♪ 3 songs" chip that follows the pointer while dragging. */
 function setDragChip(e, sel) {

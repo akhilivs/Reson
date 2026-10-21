@@ -425,7 +425,7 @@ export function SettingsView() {
           </ul>
         </div>
         <div className="button-row">
-          <button className="btn btn--ghost" onClick={() => window.dispatchEvent(new Event('brook:farewell'))}>
+          <button className="btn btn--ghost" onClick={() => window.dispatchEvent(new Event('reson:farewell'))}>
             <Power size={16} /> Quit Reson
           </button>
         </div>

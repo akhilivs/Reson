@@ -4,7 +4,7 @@ import { formatDuration } from '../utils/format.js';
 
 /** Shows the on-screen key feedback badge (see KeyFeedback). */
 export function osd(text, icon = null) {
-  window.dispatchEvent(new CustomEvent('brook:osd', { detail: { text, icon } }));
+  window.dispatchEvent(new CustomEvent('reson:osd', { detail: { text, icon } }));
 }
 
 const isTyping = (el) => !!el?.closest?.('input, textarea, select, [contenteditable="true"]');
