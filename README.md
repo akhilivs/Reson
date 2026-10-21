@@ -84,6 +84,6 @@ E2E runs set `VELA_QUIET=1`: windows stay hidden, audio is muted and media-key i
 
 ## License
 
-[MIT](LICENSE) © 2026 Akhil IVS.
+[MIT](LICENSE) © 2026 Akhil IVS. Based on Brook, © 2026 Chenna Sai Charan, also MIT licensed; that copyright notice is kept in [LICENSE](LICENSE) as the MIT License requires.
 
 The bundled `ffmpeg` binary (via `ffmpeg-static`) is licensed separately under GPL-3.0; see the note under Formats.
